@@ -51,16 +51,31 @@ steps_step1=(
 # Step-2: Traffic Generation Ramp
 ########################
 steps_step2=(
-  "Step-2_1"
-  "Step-2_2"
-  "Step-2_3"
-  "Step-2_4"
-  "Step-2_5"
-  "Step-2_6"
-  "Step-2_7"
-  "Step-2_8"
-  "Step-2_9"
-  "Step-2_10"
+  "Step-2a_1"
+  "Step-2a_2"
+  "Step-2a_3"
+  "Step-2a_4"
+  "Step-2a_5"
+  "Step-2a_6"
+  "Step-2a_7"
+  "Step-2a_8"
+  "Step-2a_9"
+  "Step-2a_10"
+  # "Step-2b_1"
+  # "Step-2b_2"
+  # "Step-2b_3"
+  # "Step-2b_4"
+  # "Step-2b_5"
+  # "Step-2b_6"
+  # "Step-2b_7"
+  # "Step-2b_8"
+  # "Step-2b_9"
+  # "Step-2b_10"
+  "Step-2c_1"
+  "Step-2c_2"
+  "Step-2c_3"
+  "Step-2c_4"
+  "Step-2c_5"
 )
 
 for config in "${steps_step2[@]}"; do
@@ -85,28 +100,28 @@ done
 # Step-4: DCF Collision Variation
 ########################
 steps_step4=(
-  "Step-4_DCF-1"
-  "Step-4_DCF-2"
-  "Step-4_DCF-3"
-  "Step-4_DCF-4"
-  "Step-4_DCF-5"
-  "Step-4_DCF-6"
-  "Step-4_DCF-7"
-  "Step-4_DCF-8"
-  "Step-4_DCF-9"
-  "Step-4_DCF-10"
+  "DCF_LOAD_LOW"
+  "DCF_LOAD_MED"
+  "DCF_LOAD_HIGH"
+  "DCF_CW_SMALL"
+  "DCF_CW_LARGE"
+  "DCF_RETRY_LOW"
+  "DCF_RETRY_HIGH"
+  "DCF_RTS_ALWAYS"
+  "DCF_RTS_NEVER"
+  "DCF_RTS_BALANCE"
 )
 
-# for config in "${steps_step4[@]}"; do
-#     echo ">>> Running Step-4: $config (DCF collision experiment)"
-#     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
+for config in "${steps_step4[@]}"; do
+    echo ">>> Running Step-4: $config (DCF collision experiment)"
+    opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
 
-#     sleep $SLEEPTIME
+    sleep $SLEEPTIME
 
-#     # Rename output CSVs for this configuration
-#     for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
-#         if [[ -f "$BASE_DIR/$f" ]]; then
-#             mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
-#         fi
-#     done
-# done
+    # Rename output CSVs for this configuration
+    for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
+        if [[ -f "$BASE_DIR/$f" ]]; then
+            mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
+        fi
+    done
+done
