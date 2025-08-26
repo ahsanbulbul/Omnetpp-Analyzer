@@ -32,11 +32,8 @@ steps_step1=(
   "Step-1_Host-20"
 )
 
-# for entry in "${steps_step1[@]}"; do
-#     config="${entry%%_*}"
-#     hosts="${entry##*}"
-
-#     echo ">>> Running Step-1: $config ($hosts)"
+# for config in "${steps_step1[@]}"; do
+#     echo ">>> Running Step-1: $config"
 #     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
 
 #     sleep $SLEEPTIME
@@ -101,28 +98,34 @@ steps_step2=(
 # Step-4: DCF Collision Variation
 ########################
 steps_step4=(
-  "DCF_LOAD_LOW"
-  "DCF_LOAD_MED"
-  "DCF_LOAD_HIGH"
-  "DCF_CW_SMALL"
-  "DCF_CW_LARGE"
-  "DCF_RETRY_LOW"
-  "DCF_RETRY_HIGH"
-  "DCF_RTS_ALWAYS"
-  "DCF_RTS_NEVER"
-  "DCF_RTS_BALANCE"
+    "DCF_LOAD_1"
+    "DCF_LOAD_2"
+    "DCF_LOAD_3"
+    "DCF_LOAD_4"
+    "DCF_CW_1"
+    "DCF_CW_2"
+    "DCF_CW_3"
+    "DCF_CW_4"
+    "DCF_RETRY_1"
+    "DCF_RETRY_2"
+    "DCF_RETRY_3"
+    "DCF_RETRY_4"
+    "DCF_RTS_1"
+    "DCF_RTS_2"
+    "DCF_RTS_3"
+    "DCF_RTS_4"
 )
 
-# for config in "${steps_step4[@]}"; do
-#     echo ">>> Running Step-4: $config (DCF collision experiment)"
-#     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
+for config in "${steps_step4[@]}"; do
+    echo ">>> Running Step-4: $config (DCF collision experiment)"
+    opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
 
-#     sleep $SLEEPTIME
+    sleep $SLEEPTIME
 
-#     # Rename output CSVs for this configuration
-#     for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
-#         if [[ -f "$BASE_DIR/$f" ]]; then
-#             mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
-#         fi
-#     done
-# done
+    # Rename output CSVs for this configuration
+    for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
+        if [[ -f "$BASE_DIR/$f" ]]; then
+            mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
+        fi
+    done
+done
