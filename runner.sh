@@ -1,11 +1,12 @@
 #!/bin/bash
 
+# Basic command
 # cd /home/veins/src/inet/examples/wireless/wiredandwirelesshostswithap
 # opp_run -u Cmdenv -n ../../../examples:../:../../:../../../src -l ../../../src/INET omnetpp.ini -c High_Retransmission
 
 set -e
 
-# Go to example directory (like in your manual command)
+# Go to example directory
 cd /home/veins/src/inet/examples/wireless/wiredandwirelesshostswithap
 
 INI="omnetpp.ini"
@@ -32,10 +33,10 @@ steps_step1=(
 )
 
 # for entry in "${steps_step1[@]}"; do
-#     config="${entry%%:*}"
-#     hosts="${entry##*:}"
+#     config="${entry%%_*}"
+#     hosts="${entry##*}"
 
-#     echo ">>> Running Step-1: $config ($hosts wireless hosts)"
+#     echo ">>> Running Step-1: $config ($hosts)"
 #     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
 
 #     sleep $SLEEPTIME
@@ -61,16 +62,16 @@ steps_step2=(
   "Step-2a_8"
   "Step-2a_9"
   "Step-2a_10"
-  # "Step-2b_1"
-  # "Step-2b_2"
-  # "Step-2b_3"
-  # "Step-2b_4"
-  # "Step-2b_5"
-  # "Step-2b_6"
-  # "Step-2b_7"
-  # "Step-2b_8"
-  # "Step-2b_9"
-  # "Step-2b_10"
+  "Step-2b_1"
+  "Step-2b_2"
+  "Step-2b_3"
+  "Step-2b_4"
+  "Step-2b_5"
+  "Step-2b_6"
+  "Step-2b_7"
+  "Step-2b_8"
+  "Step-2b_9"
+  "Step-2b_10"
   "Step-2c_1"
   "Step-2c_2"
   "Step-2c_3"
@@ -78,22 +79,22 @@ steps_step2=(
   "Step-2c_5"
 )
 
-for config in "${steps_step2[@]}"; do
-    echo ">>> Running Step-2: $config"
-    opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c "$config"
+# for config in "${steps_step2[@]}"; do
+#     echo ">>> Running Step-2: $config"
+#     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c "$config"
 
-    sleep $SLEEPTIME
+#     sleep $SLEEPTIME
 
-    for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
-        if [[ -f "$BASE_DIR/$f" ]]; then
-            mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
-            echo "Renamed $f -> ${config}_${f}"
-        else
-            echo "File $f not found for $config"
-        fi
-    done
+#     for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
+#         if [[ -f "$BASE_DIR/$f" ]]; then
+#             mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
+#             echo "Renamed $f -> ${config}_${f}"
+#         else
+#             echo "File $f not found for $config"
+#         fi
+#     done
 
-done
+# done
 
 
 ########################
@@ -112,16 +113,16 @@ steps_step4=(
   "DCF_RTS_BALANCE"
 )
 
-for config in "${steps_step4[@]}"; do
-    echo ">>> Running Step-4: $config (DCF collision experiment)"
-    opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
+# for config in "${steps_step4[@]}"; do
+#     echo ">>> Running Step-4: $config (DCF collision experiment)"
+#     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
 
-    sleep $SLEEPTIME
+#     sleep $SLEEPTIME
 
-    # Rename output CSVs for this configuration
-    for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
-        if [[ -f "$BASE_DIR/$f" ]]; then
-            mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
-        fi
-    done
-done
+#     # Rename output CSVs for this configuration
+#     for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
+#         if [[ -f "$BASE_DIR/$f" ]]; then
+#             mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
+#         fi
+#     done
+# done
