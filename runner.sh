@@ -116,16 +116,42 @@ steps_step4=(
     "DCF_RTS_4"
 )
 
-for config in "${steps_step4[@]}"; do
-    echo ">>> Running Step-4: $config (DCF collision experiment)"
-    opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
+# for config in "${steps_step4[@]}"; do
+#     echo ">>> Running Step-4: $config (DCF collision experiment)"
+#     opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c $config
 
-    sleep $SLEEPTIME
+#     sleep $SLEEPTIME
 
-    # Rename output CSVs for this configuration
-    for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
-        if [[ -f "$BASE_DIR/$f" ]]; then
-            mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
-        fi
-    done
+#     # Rename output CSVs for this configuration
+#     for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
+#         if [[ -f "$BASE_DIR/$f" ]]; then
+#             mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
+#         fi
+#     done
+# done
+
+
+########################
+# Task-3: Wired/Wireless
+########################
+task3=(
+  "Wired-2" "Wired-4" "Wired-6" "Wired-8" "Wired-10" "Wired-12" "Wired-14"
+  "Wireless-2" "Wireless-4" "Wireless-6" "Wireless-8" "Wireless-10" "Wireless-12" "Wireless-14"
+)
+
+for config in "${task3[@]}"; do
+  echo ">>> Running Step-3: $config"
+  opp_run -u Cmdenv -n $NEDPATH -l $INET_LIB $INI -c "$config"
+
+  sleep $SLEEPTIME
+
+  # Rename output CSVs for this configuration
+  for f in cwUsed.csv DataErrorRate.csv HeaderErrorRate.csv udpPacketTransmissionInfo.csv; do
+    if [[ -f "$BASE_DIR/$f" ]]; then
+      mv "$BASE_DIR/$f" "$BASE_DIR/${config}_${f}"
+      echo "Renamed $f -> ${config}_${f}"
+    else
+      echo "File $f not found for $config"
+    fi
+  done
 done
